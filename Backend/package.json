@@ -1,0 +1,29 @@
+{
+  "name": "mangalyatra",
+  "version": "1.0.0",
+  "description": "mern project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshu-200481/mangalYatra.git"
+  },
+  "author": "Anshu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anshu-200481/mangalYatra/issues"
+  },
+  "homepage": "https://github.com/Anshu-200481/mangalYatra#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2",
+    "nodemon": "^3.1.4"
+  }
+}

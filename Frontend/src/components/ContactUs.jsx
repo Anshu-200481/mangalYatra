@@ -25,6 +25,7 @@ function ContactUs() {
       e.target.reset(); // Reset the form fields
     }, 4000); // Changed to 4000 ms to match your 4-second requirement
   };
+
   
 
   return (

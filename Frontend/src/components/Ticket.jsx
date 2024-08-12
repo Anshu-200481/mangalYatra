@@ -8,7 +8,6 @@ function Ticket() {
         to: '',
         date: '',
         travelClass: 'sleeper',
-        passengers: 1,
     });
 
     const [confirmationMessage, setConfirmationMessage] = useState('');
@@ -20,26 +19,43 @@ function Ticket() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Display confirmation message
-        setConfirmationMessage(`Your ticket from ${formData.from} to ${formData.to} on ${formData.date} for ${formData.passengers} passenger(s) in ${formData.travelClass} class has been booked.`);
-        console.log(formData);
-        // Reset the form
-        setFormData({
-            name: '',
-            from: '',
-            to: '',
-            date: '',
-            travelClass: 'sleeper',
-            passengers: 1,
-        });
-
-        // Hide confirmation message after 4 seconds
-        setTimeout(() => {
-            setConfirmationMessage('');
-        }, 4000);
+        try {
+            const response = await fetch('http://localhost:5000/api/book-ticket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                setConfirmationMessage(`Your ticket from ${formData.from} to ${formData.to} on ${formData.date} for ${formData.name} in ${formData.travelClass} class has been booked.`);
+                console.log(result);
+    
+                // Reset the form
+                setFormData({
+                    name: '',
+                    from: '',
+                    to: '',
+                    date: '',
+                    travelClass: 'sleeper',
+                });
+    
+                // Hide confirmation message after 4 seconds
+                setTimeout(() => {
+                    setConfirmationMessage('');
+                }, 4000);
+            } else {
+                console.error('Failed to book ticket');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
+    
 
     return (
         <>
@@ -118,18 +134,6 @@ function Ticket() {
                                 <option value="ac">AC</option>
                                 <option value="business">Business</option>
                             </select>
-                        </div>
-                        <div className="form-group mb-4 flex items-center">
-                            <label htmlFor="passengers" className="block text-gray-700 font-bold mb-2">Passengers:</label>
-                            <input
-                                type="number"
-                                id="passengers"
-                                value={formData.passengers}
-                                onChange={handleChange}
-                                min="1"
-                                required
-                                className="w-full px-3 py-2 border rounded ml-4"
-                            />
                         </div>
                         <input
                             type="submit"
